@@ -1,4 +1,4 @@
-# Delinea Platform Token Management and Test API Script
+# Delinea Platform API Access Token Python Script
 
 This repository contains a Python script designed to manage OAuth tokens and test API connectivity for the Delinea Platform.
 
