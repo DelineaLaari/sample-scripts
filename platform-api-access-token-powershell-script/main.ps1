@@ -1,129 +1,104 @@
-# DISCLAIMER: This script is provided as-is without any warranties.
-# Please thoroughly review the code and test it in a controlled
-# environment before deploying it in a production setting.
-# Use it at your own risk.
+# Import configuration variables
+. .\config.ps1
 
-# Description: PowerShell script to manage and refresh OAuth tokens and test API connectivity
+$global:ACCESS_TOKEN = $null
+$global:REFRESH_TOKEN = $null
+$global:TOKEN_EXPIRES_AT = 0
 
-Import-Module .\config.ps1
-
-$ACCESS_TOKEN = $null
-$REFRESH_TOKEN = $null
-$TOKEN_EXPIRES_AT = 0
-
-function Print-Heading {
-    param (
-        [string]$heading
-    )
-    Write-Host ""
-    Write-Host $heading -ForegroundColor Cyan -BackgroundColor Black
-    Write-Host ""
-}
-
-function Get-Initial-Tokens {
-    param ()
+function Get-InitialTokens {
+    $global:ACCESS_TOKEN
+    $global:REFRESH_TOKEN
+    $global:TOKEN_EXPIRES_AT
 
     $payload = @{
-        grant_type    = $GRANT_TYPE
-        client_id     = $CLIENT_ID
+        grant_type = $GRANT_TYPE
+        client_id = $CLIENT_ID
         client_secret = $CLIENT_SECRET
-        scope         = $SCOPE
+        scope = $SCOPE
     }
 
-    $response = Invoke-RestMethod -Uri $TOKEN_URL -Method Post -Body $payload
+    try {
+        $response = Invoke-RestMethod -Uri $TOKEN_URL -Method Post -Body $payload
+        if ($response) {
+            $global:ACCESS_TOKEN = $response.access_token
+            $global:REFRESH_TOKEN = $response.refresh_token
+            $expires_in = $response.expires_in
+            $global:TOKEN_EXPIRES_AT = (Get-Date).AddSeconds($expires_in).AddMinutes(-1)
 
-    if ($response -ne $null) {
-        $global:ACCESS_TOKEN = $response.access_token
-        $global:REFRESH_TOKEN = $response.refresh_token
-        $expires_in = $response.expires_in
-        $global:TOKEN_EXPIRES_AT = (Get-Date).AddSeconds($expires_in - 60).ToUniversalTime()
-
-        Print-Heading "Initial Access Token Obtained"
-        Write-Host "Access Token: $ACCESS_TOKEN" -ForegroundColor Green
-        if ($REFRESH_TOKEN) {
-            Write-Host "Refresh Token: $REFRESH_TOKEN" -ForegroundColor Green
+            Write-Host "Initial Access Token Obtained"
+            Write-Host "Access Token: $global:ACCESS_TOKEN"
+            if ($global:REFRESH_TOKEN) {
+                Write-Host "Refresh Token: $global:REFRESH_TOKEN"
+            }
         }
-    } else {
-        Print-Heading "Failed to Obtain Initial Tokens"
-        Write-Host (ConvertTo-Json $response -Depth 4) -ForegroundColor Red
+    } catch {
+        Write-Host "Failed to Obtain Initial Tokens"
+        Write-Host $_.Exception.Message
     }
 }
 
-function Get-New-Access-Token {
-    param ()
+function Get-NewAccessToken {
+    $global:ACCESS_TOKEN
+    $global:TOKEN_EXPIRES_AT
+    $global:REFRESH_TOKEN
 
     $headers = @{
-        Authorization = "Bearer $ACCESS_TOKEN"
+        Authorization = "Bearer $global:ACCESS_TOKEN"
     }
     $payload = @{
-        grant_type    = $REFRESH_GRANT_TYPE
-        refresh_token = $REFRESH_TOKEN
+        grant_type = $REFRESH_GRANT_TYPE
+        refresh_token = $global:REFRESH_TOKEN
     }
 
-    $response = Invoke-RestMethod -Uri $TOKEN_URL -Method Post -Headers $headers -Body $payload
+    try {
+        $response = Invoke-RestMethod -Uri $TOKEN_URL -Method Post -Body $payload -Headers $headers
+        if ($response) {
+            $global:ACCESS_TOKEN = $response.access_token
+            $expires_in = $response.expires_in
+            $global:TOKEN_EXPIRES_AT = (Get-Date).AddSeconds($expires_in).AddMinutes(-1)
 
-    if ($response -ne $null) {
-        $global:ACCESS_TOKEN = $response.access_token
-        $expires_in = $response.expires_in
-        $global:TOKEN_EXPIRES_AT = (Get-Date).AddSeconds($expires_in - 60).ToUniversalTime()
-
-        Print-Heading "New Access Token Obtained"
-        Write-Host "Access Token: $ACCESS_TOKEN" -ForegroundColor Green
-        if ($response.refresh_token) {
-            $global:REFRESH_TOKEN = $response.refresh_token
-            Write-Host "Refresh Token: $REFRESH_TOKEN" -ForegroundColor Green
+            Write-Host "New Access Token Obtained"
+            Write-Host "Access Token: $global:ACCESS_TOKEN"
+            if ($response.refresh_token) {
+                $global:REFRESH_TOKEN = $response.refresh_token
+                Write-Host "Refresh Token: $global:REFRESH_TOKEN"
+            }
         }
-        # Call the test API after refreshing the token
-        Call-Test-API
-    } else {
-        Print-Heading "Failed to Refresh Token"
-        Write-Host (ConvertTo-Json $response -Depth 4) -ForegroundColor Red
+    } catch {
+        Write-Host "Failed to Refresh Token"
+        Write-Host $_.Exception.Message
     }
 }
 
-function Ensure-Valid-Token {
-    param (
-        [bool]$mimic_expired
-    )
-
-    if ($mimic_expired -or ((Get-Date).ToUniversalTime() -gt $TOKEN_EXPIRES_AT)) {
-        Print-Heading "Access Token Expired"
+function Ensure-ValidToken {
+    if ((Get-Date) -gt $global:TOKEN_EXPIRES_AT) {
+        Write-Host "Access Token Expired"
         Write-Host "Refreshing..."
-        Get-New-Access-Token
+        Get-NewAccessToken
     } else {
-        Print-Heading "Access Token is Still Valid"
-        # Call the test API if the token is still valid
-        Call-Test-API
+        Write-Host "Access Token is Still Valid"
     }
 }
 
-function Call-Test-API {
-    param ()
-
+function Call-API {
     $headers = @{
-        Authorization = "Bearer $ACCESS_TOKEN"
+        Authorization = "Bearer $global:ACCESS_TOKEN"
     }
 
-    $response = Invoke-RestMethod -Uri $TEST_API_URL -Method Get -Headers $headers
-    
-    if ($response -ne $null) {
-        Print-Heading "Test API Call Successful"
-        Write-Host (ConvertTo-Json $response -Depth 4) -ForegroundColor Green
-    } else {
-        Print-Heading "Test API Call Failed"
-        Write-Host "Status Code: $($response.StatusCode)" -ForegroundColor Red
-        Write-Host (ConvertTo-Json $response -Depth 4) -ForegroundColor Red
+    try {
+        $response = Invoke-RestMethod -Uri $API_URL -Method Get -Headers $headers
+        if ($response) {
+            Write-Host "API Call Successful"
+            Write-Host ($response | ConvertTo-Json -Depth 4)
+        }
+    } catch {
+        Write-Host "API Call Failed"
+        Write-Host $_.Exception.Message
     }
 }
 
-function Main {
-    param (
-        [switch]$mimic_expired
-    )
-
-    Print-Heading "Starting Token Acquisition"
-    Get-Initial-Tokens
-    Ensure-Valid-Token -mimic_expired:$mimic_expired
-}
-
-Main @args
+# Main script execution
+Write-Host "Starting Token Acquisition"
+Get-InitialTokens
+Ensure-ValidToken
+Call-API
