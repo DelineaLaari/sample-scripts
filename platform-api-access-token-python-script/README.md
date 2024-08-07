@@ -9,6 +9,40 @@ The script performs the following tasks:
 2. Refreshes the access token when it is expired.
 3. Calls a test API endpoint to verify token validity and connectivity.
 
+
+
+## Prerequisites
+- Python 3.6+
+- Ensure you have `pip`, the Python package installer, to install the required packages. pip usually comes bundled with Python installations.
+- `requests` library 
+- `colorama` library
+- The script provided is written in Python and should be able to run on any operating system that supports Python, including Windows, macOS, and Linux. For this documentation, we are providing instructions validated on Linux.
+
+
+## Installation
+
+1. Clone the repository:
+
+``` bash
+git clone https://github.com/your-username/your-repo-name.git cd your-repo-name
+```
+
+Note: Replace "https://github.com/your-username/your-repo-name.git" with the actual URL of your GitHub repository
+
+2. Create a virtual environment (optional but recommended):
+``` bash
+python3 -m venv venv
+source venv/bin/activate # On Windows, use `.\venv\Scripts\activate`
+```
+
+3. Install the required packages:
+
+Note: it is highly recommended to set up a Virtual Environment. Otherwise, packages will be installed system-wide. 
+
+``` bash
+pip install requests colorama
+```
+
 ## Files
 
 - `config.py`: Contains configuration variables required for token management and API calls.
@@ -30,25 +64,32 @@ TEST_API_URL = "https://your-hostname.delinea.app/identity/entities/xpmusers?det
 ```
 
 ## Usage
-### Prerequisites
-- Python 3.6 or later
-- requests, colorama, and argparse libraries
 
-You can install the required libraries using pip:
+1. Run the main script inside the python virtual environment to check and renew the access token and call the test API:
 
 ``` bash
-pip install requests colorama argparse
+python main.py
+ ```
+
+The script will:
+
+- Check if the current access token is valid.
+- If the token is expired, it will refresh the token using the refresh token.
+- After refreshing or confirming the token's validity, it will call the specified test API endpoint and print the response.
+
+### Example Output
+
+``` bash
+Access token expired, refreshing...
+New access token obtained: your-new-access-token
+Test API call successful!
+{
+    "data": "sample response from your API"
+}
 ```
 
-Running the Script
-1. Clone this repository or download the config.py and main.py files.
-2. Open a terminal and navigate to the directory where the scripts are saved.
-3. Run the main.py script:
-``` bash
+The script accepts a command-line parameter that allows you to mimic an expired token. Append command-line parameter `--mimic-expired` to mimic an expired token.
 
+```bash
 python main.py --mimic-expired
 ```
-
-Script Parameters
-
---mimic-expired: Optional switch to mimic an expired token scenario for testing purposes.
