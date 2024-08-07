@@ -65,6 +65,13 @@ REFRESH_GRANT_TYPE = "refresh_token"  # Grant type for refreshing the token
 TEST_API_URL = "https://your-hostname.delinea.app/identity/entities/xpmusers?detail=true"  # Test API endpoint
 ```
 
+- `TOKEN_URL`: Specifies the URL where OAuth 2.0 tokens can be obtained from your platform tenant.
+- `CLIENT_ID` and `CLIENT_SECRET`: Your OAuth 2.0 client credentials used for authentication.
+- `SCOPE`: Defines the scope of access requested by the client application. default: xpmheadless
+- `GRANT_TYPE`: Specifies the OAuth 2.0 grant type (client_credentials) used for obtaining access tokens. 
+- `REFRESH_GRANT_TYPE`: Indicates the grant type (refresh_token) used for refreshing tokens.
+- `TEST_API_URL`: Provides the URL of a test API endpoint. This example includes the API endpoint for accessing user entities with detailed information.
+
 ## Usage
 
 1. Run the main script inside the python virtual environment to check and renew the access token and call the test API:
