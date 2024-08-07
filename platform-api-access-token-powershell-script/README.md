@@ -1,5 +1,5 @@
 
-# Delinea Platform API Access Token Powershell Script - Work-In-Progress!!!!!!
+# Delinea Platform API Access Token Powershell Script
 
 This repository contains a PowerShell script designed to manage OAuth tokens and test API connectivity for the Delinea Platform.
 
@@ -21,13 +21,13 @@ Update the `config.ps1` file with your specific configuration details:
 
 ```powershell
 # Configuration variables
-$TOKEN_URL = "https://your-hostname.delinea.app/identity/api/oauth2/token/xpmplatform"
-$CLIENT_ID = "your-client-id"
-$CLIENT_SECRET = "your-client-secret"
-$SCOPE = "xpmheadless"  
-$GRANT_TYPE = "client_credentials"  # Default grant type
-$REFRESH_GRANT_TYPE = "refresh_token"  # Grant type for refreshing the token
-$TEST_API_URL = "https://your-hostname.delinea.app/identity/entities/xpmusers?detail=true"  # Test API endpoint
+$global:TOKEN_URL = "https://your-hostname.delinea.app/identity/api/oauth2/token/xpmplatform"
+$global:CLIENT_ID = "your-client-id"
+$global:CLIENT_SECRET = "your-client-secret"
+$global:SCOPE = "xpmheadless"  
+$global:GRANT_TYPE = "client_credentials"  # Default grant type
+$global:REFRESH_GRANT_TYPE = "refresh_token"  # Grant type for refreshing the token
+$global:API_URL = "https://your-hostname.delinea.app/identity/entities/xpmusers?detail=true"  # Test API endpoint
 ```
 
 ## Usage
@@ -43,12 +43,9 @@ $TEST_API_URL = "https://your-hostname.delinea.app/identity/entities/xpmusers?de
 - Run the main.ps1 script:
 
 ```powershell
-.\main.ps1 --mimic-expired
+.\main.ps1
 ```
 
-Script Parameters
-
---mimic-expired: Optional switch to mimic an expired token scenario for testing purposes.
 
 
 ## Notes
