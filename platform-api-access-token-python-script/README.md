@@ -95,3 +95,7 @@ The script accepts a command-line parameter that allows you to mimic an expired 
 ```bash
 python main.py --mimic-expired
 ```
+
+## Notes
+This script is provided as-is without any warranties. Please review the code and test it in a controlled environment before deploying it in a production setting. Use it at your own risk.
+Ensure you have appropriate permissions and access to the Delinea Platform API.
