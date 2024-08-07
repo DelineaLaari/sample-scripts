@@ -3,6 +3,8 @@
 
 This repository contains a PowerShell script designed to manage OAuth tokens and test API connectivity for the Delinea Platform.
 
+This is a simplified example and might need to be adapted to fit your specific requirements
+
 ## Overview
 
 The script performs the following tasks:
