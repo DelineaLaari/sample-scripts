@@ -12,6 +12,20 @@ The script performs the following tasks:
 2. Refreshes the access token when it is expired.
 3. Calls a test API endpoint to verify token validity and connectivity.
 
+## Prerequisites
+- PowerShell 5.1 or later
+
+## Installation
+
+1. Clone the repository:
+
+``` bash
+git clone https://github.com/your-username/your-repo-name.git cd your-repo-name
+```
+
+Note: Replace "https://github.com/your-username/your-repo-name.git" with the actual URL of your GitHub repository
+
+
 ## Files
 
 - `config.ps1`: Contains configuration variables required for token management and API calls.
@@ -32,17 +46,26 @@ $global:REFRESH_GRANT_TYPE = "refresh_token"  # Grant type for refreshing the to
 $global:API_URL = "https://your-hostname.delinea.app/identity/entities/xpmusers?detail=true"  # Test API endpoint
 ```
 
+- $global:TOKEN_URL: Specifies the URL where OAuth 2.0 tokens can be obtained from your platform tenant.
+- $global:CLIENT_ID and CLIENT_SECRET: Your OAuth 2.0 client credentials used for authentication.
+- $global:SCOPE: Defines the scope of access requested by the client application. default: xpmheadless
+- $global:GRANT_TYPE: Specifies the OAuth 2.0 grant type (client_credentials) used for obtaining access tokens. 
+- $global:REFRESH_GRANT_TYPE: Indicates the grant type (refresh_token) used for refreshing tokens.
+- $global:API_URL: Provides the URL of a test API endpoint. This example includes the API endpoint for accessing user entities with detailed information.
+
 ## Usage
 
+The script will:
 
-### Prerequisites
-- PowerShell 5.1 or later
+- Check if the current access token is valid.
+- If the token is expired, it will refresh the token using the refresh token.
+- After refreshing or confirming the token's validity, it will call the specified test API endpoint and print the response.
 
-### Running the Script
 
-- Clone this repository or download the config.ps1 and main.ps1 files.
-- Open a PowerShell prompt and navigate to the directory where the scripts are saved.
-- Run the main.ps1 script:
+## Running the Script
+
+1. Open a PowerShell prompt and navigate to the directory where the scripts are saved.
+2. Run the main.ps1 script:
 
 ```powershell
 .\main.ps1
