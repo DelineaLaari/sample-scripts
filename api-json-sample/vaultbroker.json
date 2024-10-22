@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Delinea API",
+    "title": "Delinea Platform API",
     "termsOfService": "https://www.delinea.com/tos",
     "contact": {
       "name": "Delinea",
@@ -14,12 +14,9 @@
         "url": "https://{tenantHostname}.delinea.app/vaultbroker",
         "variables": {
           "tenantHostname": {
-            "default": "heimdall",
+            "default": "tenantHostname",
             "description": "This is your tenant hostname e.g. example in example.delinea.app"
           }
-        },
-        "basePath": {
-          "default": "vaultbroker"
         }
       }
     ],
