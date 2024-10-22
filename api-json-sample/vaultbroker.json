@@ -12,11 +12,10 @@
     "servers": [
       {
         "url": "https://{tenantHostname}.delinea.app/vaultbroker",
-        "description": "The production API server",
         "variables": {
           "tenantHostname": {
             "default": "heimdall",
-            "description": "This is your Tenant Hostname `heimdall.delinea.com`"
+            "description": "This is your tenant hostname e.g. example in example.delinea.app"
           }
         },
         "basePath": {
