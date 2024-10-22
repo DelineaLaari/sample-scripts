@@ -19,9 +19,6 @@
             "description": "This is your Tenant Hostname `heimdall.delinea.com`"
           }
         },
-        "basePath": {
-          "default": "vaultbroker"
-        }
       }
     ],
   "paths": {
