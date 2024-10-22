@@ -12,7 +12,6 @@
     "servers": [
       {
         "url": "https://{tenantHostname}.delinea.app/vaultbroker",
-        "description": "The production API server",
         "variables": {
           "tenantHostname": {
             "default": "tenantHostname",
