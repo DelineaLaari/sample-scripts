@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Delinea API",
+    "title": "Delinea Platform API",
     "termsOfService": "https://www.delinea.com/tos",
     "contact": {
       "name": "Delinea",
@@ -15,8 +15,8 @@
         "description": "The production API server",
         "variables": {
           "tenantHostname": {
-            "default": "heimdall",
-            "description": "This is your Tenant Hostname `heimdall.delinea.com`"
+            "default": "enter your tenant hostname",
+            "description": "This is your Tenant Hostname e.g. `example.delinea.app`"
           }
         },
       }
