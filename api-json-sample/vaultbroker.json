@@ -16,7 +16,7 @@
         "variables": {
           "tenantHostname": {
             "default": "tenantHostname",
-            "description": "update {tenantHostname} with your Tenant Hostname e.g. `example.delinea.app`"
+            "description": "update tenantHostname with your Tenant Hostname e.g. `example.delinea.app`"
           }
         },
       }
