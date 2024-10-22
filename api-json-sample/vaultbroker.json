@@ -15,8 +15,8 @@
         "description": "The production API server",
         "variables": {
           "tenantHostname": {
-            "default": "enter your tenant hostname",
-            "description": "This is your Tenant Hostname e.g. `example.delinea.app`"
+            "default": "{tenantHostname}",
+            "description": "update {tenantHostname} with your Tenant Hostname e.g. `example.delinea.app`"
           }
         },
       }
