@@ -18,7 +18,7 @@
             "default": "tenantHostname",
             "description": "update tenantHostname with your Tenant Hostname e.g. `example.delinea.app`"
           }
-        },
+        }
       }
     ],
   "paths": {
