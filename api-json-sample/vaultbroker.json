@@ -11,7 +11,7 @@
   },
     "servers": [
       {
-        "url": "https://{tenantHostname}.delinea.app/vaultbroker",
+        "url": "https://{tenantHostname}.secureplatform.io/vaultbroker",
         "variables": {
           "tenantHostname": {
             "default": "tenantHostname",
