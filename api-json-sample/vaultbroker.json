@@ -15,7 +15,7 @@
         "variables": {
           "tenantHostname": {
             "default": "tenantHostname",
-            "description": "Use your proper platform tenant hostname.",
+            "description": "Use your proper platform tenant hostname."
           }
         }
       }
