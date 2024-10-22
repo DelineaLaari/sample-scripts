@@ -1,0 +1,477 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Delinea API",
+    "termsOfService": "https://www.delinea.com/tos",
+    "contact": {
+      "name": "Delinea",
+      "url": "https://www.delinea.com"
+    },
+    "version": "1.0"
+  },
+    "servers": [
+      {
+        "url": "https://{tenantHostname}.delinea.app/vaultbroker",
+        "description": "The production API server",
+        "variables": {
+          "tenantHostname": {
+            "default": "heimdall",
+            "description": "This is your Tenant Hostname `heimdall.delinea.com`"
+          }
+        },
+        "basePath": {
+          "default": "vaultbroker"
+        }
+      }
+    ],
+  "paths": {
+    "/api/proxy/unifiedmoderequested": {
+      "put": {
+        "tags": [
+          "Proxy"
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "ForwardApiRequest",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          },
+          {
+            "name": "X-Api-Version",
+            "in": "header",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          },
+          {
+            "name": "X-MT-SecondaryId",
+            "in": "header",
+            "description": "Tenant Secondary ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "00000000-1337-0000-0000-000000000000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vaults": {
+      "get": {
+        "tags": [
+          "Vault"
+        ],
+        "summary": "Gets the vaults.",
+        "description": "Gets the vaults.",
+        "operationId": "GetVaults",
+        "parameters": [
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "The include inactive bit.",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          },
+          {
+            "name": "X-Api-Version",
+            "in": "header",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          },
+          {
+            "name": "X-MT-SecondaryId",
+            "in": "header",
+            "description": "Tenant Secondary ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "00000000-1337-0000-0000-000000000000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaultViews"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaultViews"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaultViews"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vault"
+        ],
+        "summary": "Creates a vault for a tenant.",
+        "description": "Creates a vault for a tenant.",
+        "operationId": "CreateVaultAsync",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          },
+          {
+            "name": "X-Api-Version",
+            "in": "header",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          },
+          {
+            "name": "X-MT-SecondaryId",
+            "in": "header",
+            "description": "Tenant Secondary ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "00000000-1337-0000-0000-000000000000"
+          }
+        ],
+        "requestBody": {
+          "description": "The vault to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VaultView"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VaultView"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VaultView"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaultView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaultView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaultView"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vaults/{id}": {
+      "put": {
+        "tags": [
+          "Vault"
+        ],
+        "summary": "Updates a vault for a tenant.",
+        "description": "Updates a vault for a tenant.",
+        "operationId": "UpdateVaultAsync",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the vault to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          },
+          {
+            "name": "X-Api-Version",
+            "in": "header",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          },
+          {
+            "name": "X-MT-SecondaryId",
+            "in": "header",
+            "description": "Tenant Secondary ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "00000000-1337-0000-0000-000000000000"
+          }
+        ],
+        "requestBody": {
+          "description": "The vault to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VaultView"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VaultView"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VaultView"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaultView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaultView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaultView"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ConnectionView": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The vault url",
+            "nullable": true
+          },
+          "oAuthProfileId": {
+            "type": "string",
+            "description": "The vault OauthProfileId",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Connection Information"
+      },
+      "ValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "VaultView": {
+        "required": [
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "vaultId": {
+            "type": "string",
+            "description": "Id of the vault",
+            "format": "uuid",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Friendly Name for the vault",
+            "nullable": true
+          },
+          "type": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Type of the vault. Allowed types are SecretServerCloud and SecretServerOnPrem"
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Is this the default vault to use per type"
+          },
+          "isGlobalDefault": {
+            "type": "boolean",
+            "description": "Is this the default vault to use for the entire app"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Is the vault active"
+          },
+          "connection": {
+            "$ref": "#/components/schemas/ConnectionView"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Vault view"
+      },
+      "VaultViews": {
+        "type": "object",
+        "properties": {
+          "vaults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VaultView"
+            },
+            "description": "Gets or sets the vaults",
+            "nullable": true,
+            "deprecated": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Vaults View"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Please enter a valid token",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
