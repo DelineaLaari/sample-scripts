@@ -9396,7 +9396,6 @@
         "in": "header",
         "description": "Please enter a valid Bearer token. Example: 'Bearer {token}'"
       }
-    }
     },
     "security": [
       {
