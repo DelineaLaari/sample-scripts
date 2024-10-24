@@ -9388,7 +9388,7 @@
       },
       "type": "object"
     },
-  "securityDefinitions": {
+    "securityDefinitions": {
       "Bearer": {
         "type": "apiKey",
         "name": "Authorization",
@@ -9397,9 +9397,9 @@
       }
     }
     },
-  "security": [
+    "security": [
       {
         "Bearer": []
       }
     ]
-  }    
+}    
