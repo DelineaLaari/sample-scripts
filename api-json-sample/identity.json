@@ -11,7 +11,7 @@
   },
   "x-explorer-enabled": true,
   "host": "{tenantHostname}.delinea.app",
-  "basePath": "/vaultbroker",
+  "basePath": "/identity",
   "schemes": [
     "https"
   ],
