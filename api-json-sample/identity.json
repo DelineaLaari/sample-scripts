@@ -10,7 +10,7 @@
     "version": "6.1.963"
   },
   "x-explorer-enabled": true,
-  "host": "{tenantHostname}.delinea.app",
+  "host": "tenantHostname.delinea.app",
   "basePath": "/identity",
   "schemes": [
     "https"
@@ -9388,7 +9388,7 @@
       },
       "type": "object"
     },
-    "securityDefinitions": {
+  "securityDefinitions": {
       "Bearer": {
         "type": "apiKey",
         "name": "Authorization",
@@ -9397,7 +9397,7 @@
       }
     }
     },
-    "security": [
+  "security": [
       {
         "Bearer": []
       }
