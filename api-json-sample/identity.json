@@ -10,6 +10,8 @@
     "version": "6.1.963"
   },
   "x-explorer-enabled": true,
+  "host": "{tenantHostname}.delinea.app",
+  "basePath": "/vaultbroker",
   "schemes": [
     "https"
   ],
@@ -37,17 +39,6 @@
     {
       "description": "Manage local group and admin rights",
       "name": "Local Group Management"
-    }
-  ],
-  "servers": [
-    {
-      "url": "https://{tenantHostname}.delinea.app/vaultbroker",
-      "variables": {
-        "tenantHostname": {
-          "default": "tenantHostname",
-          "description": "Use your proper platform tenant hostname."
-        }
-      }
     }
   ],
   "paths": {
