@@ -9388,19 +9388,19 @@
         }
       },
       "type": "object"
-    },
-    "securityDefinitions": {
-      "Bearer": {
-        "type": "apiKey",
-        "name": "Authorization",
-        "in": "header",
-        "description": "Please enter a valid Bearer token. Example: 'Bearer {token}'"
-      }
-    },
-    "security": [
-      {
-        "Bearer": []
-      }
-    ]
-}
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Please enter a valid Bearer token. Example: 'Bearer {token}'"
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
 }
