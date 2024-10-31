@@ -3,7 +3,7 @@
   "info": {
     "termsOfService": "https://delinea.com/terms-of-use",
     "title": "Delinea API",
-    "description": "Please replace `tenantHostname` with your specific tenant's hostname in all API requests.",
+    "description": "Please replace `tenantHostname` in the base URL above with your specific tenant's hostname in all API requests.",
     "contact": {
       "url": "https://www.delinea.com",
       "name": "Delinea"
