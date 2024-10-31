@@ -12,7 +12,7 @@
   },
   "x-explorer-enabled": true,
   "host": "tenantHostname.delinea.app",
-  "basePath": "/identity",
+  "basePath": "/identity/api",
   "schemes": [
     "https"
   ],
