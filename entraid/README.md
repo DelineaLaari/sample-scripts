@@ -42,7 +42,7 @@ This script automates creating and configuring an Azure/Entra ID App Registratio
 - PLATFORM_SCOPE = "your_scope" # Specifies the scope for the Delinea platform
 - AZURE_TENANT_ID = "azure_tenant_id" # Specifies the tenant id in Azure
   
-3. For easy installation of the necessary third-party modules, you can then install the modules listed in `requirements.txt` using the following command:
+3. (Optional) For easy installation of the necessary third-party modules, you can then install the modules listed in `requirements.txt` using the following command:
 
 ```sh
 pip3 install -r requirements.txt
